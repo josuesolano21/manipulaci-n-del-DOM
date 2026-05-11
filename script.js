@@ -227,19 +227,35 @@ function handleInputChange() {
  * PREGUNTAS DE REFLEXIÓN:
  * 
  * 1. ¿Qué elemento del DOM estás seleccionando?
- *    R: 
+ * 
+ *    R: Los inputs del formulario (userName, userMessage),
+ *       los spans de ERROR (userNameError, userMessageError), el contenedor
+ *       de los mensajes (messagesContainer), el estado vacío (emptyState) y el
+ *       contador (messageCount) son los elementos que el DOM está seleccionando.
  * 
  * 2. ¿Qué evento provoca el cambio en la página?
- *    R: 
+ * 
+ *    R: El evento 'SUBMIT' del formulaio es el encargado de 
+ *       disparar el cambio de página cuando el usuario
+ *       hace click en el botón dec"Agregar Mensaje".
  * 
  * 3. ¿Qué nuevo elemento se crea?
- *    R: 
+ * 
+ *    R: Se crea un elemento DIV con la clase 'MESSAGE-CARD' que contiene
+ *       el avatar con las iniciales, el nombre, la fecha y
+ *       el contenido del mensaje del usuario.
  * 
  * 4. ¿Dónde se inserta ese elemento dentro del DOM?
- *    R: 
+ * 
+ *    R: El DOM se inserta dentro del DIV #messagesContainer, para que los
+ *       mensajes nuevos aparezcan en la parte superior.
+
  * 
  * 5. ¿Qué ocurre en la página cada vez que repites la acción?
- *    R: 
+ * 
+ *    R: Sgrega una nueva tarjeta de mensaje al inicio,
+ *       el contador incrementa en 1 y si es el 1er mensaje, el estado
+ *      vacío desaparece.
  */
 
 
