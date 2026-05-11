@@ -7,7 +7,7 @@ Este documento establece las reglas de convivencia, comunicación y estándares 
 | :--- | :--- | :--- |
 | [Haziel Josue Solano] | Líder (Arquitecto) | `@josuesolano21` |
 | [Julian Andres Diaz] | Desarrollador | `@juliandiaz-05` |
-| [Nombre del Aprendiz 3] | Desarrollador | `@usuario3` |
+| [Sara Estupiñan] | Desarrollador | `@sararojas3315656` |
 
 ## 2. Canales de Comunicación
 Para mantener el orden y separar lo profesional de lo personal, usaremos los siguientes canales:
