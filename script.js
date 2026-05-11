@@ -171,53 +171,112 @@ function showEmptyState() {
  * @param {Event} event - Evento del formulario
  */
 function handleFormSubmit(event) {
-    // TODO: Implementar el manejador del evento submit
-    
-    // PASO 1: Prevenir el comportamiento por defecto del formulario
-    // Pista: event.preventDefault()
-    
-    // PASO 2: Validar el formulario
-    // Si no es válido, detener la ejecución (return)
-    
-    // PASO 3: Obtener los valores de los campos
-    
-    // PASO 4: Crear el nuevo elemento de mensaje
-    // Llamar a createMessageElement con los valores obtenidos
-    
-    // PASO 5: Limpiar el formulario
-    // Pista: messageForm.reset()
-    
-    // PASO 6: Limpiar los errores
-    
-    // PASO 7: Opcional - Enfocar el primer campo para facilitar agregar otro mensaje
-    // Pista: userNameInput.focus()
+
+    // PASO 1: Prevenir que la página se recargue al enviar el formulario
+    event.preventDefault();
+
+    // PASO 2: Validar el formulario - si hay errores, nos detenemos aquí
+    const esValido = validarFormulario();
+    if (!esValido) return;
+
+    // PASO 3: Obtener los valores de los campos del formulario
+    const nombre = userNameInput.value.trim();
+    const mensaje = messageInput.value.trim();
+
+    // PASO 4: Crear el nuevo elemento de mensaje con los valores obtenidos
+    createMessageElement(nombre, mensaje);
+
+    // PASO 5: Limpiar el formulario (vacía todos los campos)
+    messageForm.reset();
+
+    // PASO 6: Limpiar los mensajes de error visibles
+    limpiarErrores();
+
+    // PASO 7: (Opcional) Enfocar el primer campo para agregar otro mensaje fácilmente
+    userNameInput.focus();
 }
+
 
 /**
  * Limpia los errores cuando el usuario empieza a escribir
+ * Se ejecuta automáticamente con el evento 'input' de cada campo
  */
-function handleInputChange() {
-    // TODO: Implementar limpieza de errores al escribir
-    // Esta función se ejecuta cuando el usuario escribe en un campo
-    // Debe limpiar el error de ese campo específico
+function handleInputChange(event) {
+
+    // 'event.target' es el campo donde el usuario está escribiendo
+    const campo = event.target;
+
+    // Buscamos el mensaje de error asociado a ese campo específico
+    // Usamos una convención de id: "error-" + id del campo
+    const errorElemento = document.getElementById("error-" + campo.id);
+
+    // Si existe un mensaje de error para ese campo, lo ocultamos
+    if (errorElemento) {
+        errorElemento.textContent = "";      // Borra el texto del error
+        errorElemento.style.display = "none"; // Oculta el elemento
+    }
 }
 
 
+// Funciones de apoyo
+
+/**
+ * Valida que los campos no estén vacíos
+ * Retorna true si todo está bien, false si hay algún error
+ */
+function validarFormulario() {
+    let valido = true;
+
+    // Verificar campo de nombre
+    if (userNameInput.value.trim() === "") {
+        mostrarError("error-userName", "El nombre es obligatorio.");
+        valido = false;
+    }
+
+    // Verificar campo de mensaje
+    if (messageInput.value.trim() === "") {
+        mostrarError("error-message", "El mensaje no puede estar vacío.");
+        valido = false;
+    }
+
+    return valido;
+}
+
+/**
+ * Muestra un mensaje de error en el elemento indicado
+ * @param {string} idError  - ID del elemento donde mostrar el error
+ * @param {string} texto    - Texto del error a mostrar
+ */
+function mostrarError(idError, texto) {
+    const errorElemento = document.getElementById(idError);
+    if (errorElemento) {
+        errorElemento.textContent = texto;
+        errorElemento.style.display = "block";
+    }
+}
+
+/**
+ * Limpia todos los mensajes de error del formulario
+ */
+function limpiarErrores() {
+    const errores = document.querySelectorAll(".error-mensaje");
+    errores.forEach(function(error) {
+        error.textContent = "";
+        error.style.display = "none";
+    });
+}
 // ============================================
 // 5. REGISTRO DE EVENTOS
 // ============================================
 
-/**
- * Aquí registramos todos los event listeners
- */
+// Cuando el usuario envíe el formulario, ejecutar handleFormSubmit
+messageForm.addEventListener('submit', handleFormSubmit);
 
-// TODO: Registrar el evento 'submit' en el formulario
-// Pista: messageForm.addEventListener('submit', handleFormSubmit);
+// Cuando el usuario escriba en el campo de nombre, limpiar su error
+userNameInput.addEventListener('input', handleInputChange);
 
-// TODO: Registrar eventos 'input' en los campos para limpiar errores al escribir
-// Pista: userNameInput.addEventListener('input', handleInputChange);
-// Pista: userMessageInput.addEventListener('input', handleInputChange);
-
+// Cuando el usuario escriba en el campo de mensaje, limpiar su error
+userMessageInput.addEventListener('input', handleInputChange);
 
 // ============================================
 // 6. REFLEXIÓN Y DOCUMENTACIÓN
