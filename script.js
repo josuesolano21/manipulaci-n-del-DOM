@@ -51,78 +51,46 @@ let totalMessages = 0;
 // 2. FUNCIONES AUXILIARES
 // ============================================
 
-/**
- * Valida que un campo no esté vacío ni contenga solo espacios en blanco
- * @param {string} value - El valor a validar
- * @returns {boolean} - true si es válido, false si no lo es
- */
+// Retorna TRUE si el campo tiene texto, retorna FALSE si está vacío o con espacios
 function isValidInput(value) {
-    // TODO: Implementar validación
-    // Pista: usa trim() para eliminar espacios al inicio y final
-    // Retorna true si después de trim() el string tiene longitud > 0
+    return value.trim().length > 0;
 }
 
-/**
- * Muestra un mensaje de error en un elemento específico
- * @param {HTMLElement} errorElement - Elemento donde mostrar el error
- * @param {string} message - Mensaje de error a mostrar
- */
+// Muestra el mensaje ERROR donde corresponde
 function showError(errorElement, message) {
-    // TODO: Implementar función para mostrar error
-    // Pista: asigna el mensaje al textContent del elemento
+    errorElement.textContent = message;
 }
 
-/**
- * Limpia el mensaje de error de un elemento específico
- * @param {HTMLElement} errorElement - Elemento del que limpiar el error
- */
+// Limpia el mensaje de ERROR
 function clearError(errorElement) {
-    // TODO: Implementar función para limpiar error
-    // Pista: asigna un string vacío al textContent
+    errorElement.textContent = '';
 }
 
-/**
- * Valida todos los campos del formulario
- * @returns {boolean} - true si todos los campos son válidos, false si alguno no lo es
- */
+// Valida ambos campos y agrega/remueve la clase 'ERROR' a los inputs
 function validateForm() {
-    // TODO: Implementar validación completa del formulario
-    // 1. Obtener los valores de los inputs usando .value
-    // 2. Crear una variable para saber si el formulario es válido (inicialmente true)
-    // 3. Validar el campo de nombre de usuario
-    //    - Si no es válido, mostrar error y cambiar la variable a false
-    //    - Si es válido, limpiar el error
-    // 4. Validar el campo de mensaje
-    //    - Si no es válido, mostrar error y cambiar la variable a false
-    //    - Si es válido, limpiar el error
-    // 5. Retornar si el formulario es válido o no
-    
-    // Ejemplo de estructura:
-    /*
-    const userName = userNameInput.value;
-    const userMessage = userMessageInput.value;
     let isValid = true;
-    
-    // Validar nombre
-    if (!isValidInput(userName)) {
-        // Mostrar error
-        // Agregar clase 'error' al input
+
+    if (!isValidInput(userNameInput.value)) {
+        showError(userNameError, 'El nombre es obligatorio');
+        userNameInput.classList.add('error');
         isValid = false;
     } else {
-        // Limpiar error
-        // Remover clase 'error' del input
+        clearError(userNameError);
+        userNameInput.classList.remove('error');
     }
-    
-    // Validar mensaje (estructura similar)
-    
+
+    if (!isValidInput(userMessageInput.value)) {
+        showError(userMessageError, 'El mensaje es obligatorio');
+        userMessageInput.classList.add('error');
+        isValid = false;
+    } else {
+        clearError(userMessageError);
+        userMessageInput.classList.remove('error');
+    }
+
     return isValid;
-    */
 }
 
-/**
- * Obtiene la fecha y hora actual formateada
- * @returns {string} - Fecha y hora en formato legible
- */
 function getCurrentTimestamp() {
     const now = new Date();
     const options = { 
@@ -135,45 +103,30 @@ function getCurrentTimestamp() {
     return now.toLocaleDateString('es-ES', options);
 }
 
-/**
- * Obtiene las iniciales de un nombre
- * @param {string} name - Nombre completo
- * @returns {string} - Iniciales en mayúsculas
- */
+// Retorna las iniciales en mayúsculas del nombre 
 function getInitials(name) {
-    // TODO: Implementar función para obtener iniciales
-    // Pista: 
-    // 1. Separar el nombre por espacios usando split(' ')
-    // 2. Tomar la primera letra de cada palabra
-    // 3. Unirlas y convertirlas a mayúsculas
-    // 4. Si solo hay una palabra, retornar las dos primeras letras
+    return name
+        .trim()
+        .split(' ')
+        .map(word => word[0])
+        .join('')
+        .toUpperCase();
 }
 
-/**
- * Actualiza el contador de mensajes
- */
+// Muestra el número actual de mensajes 
 function updateMessageCount() {
-    // TODO: Implementar actualización del contador
-    // Pista: Usa template literals para crear el texto
-    // Formato: "X mensaje(s)" o "X mensajes"
+    messageCount.textContent = `${totalMessages} ${totalMessages === 1 ? 'mensaje' : 'mensajes'}`;
 }
 
-/**
- * Oculta el estado vacío (mensaje cuando no hay mensajes)
- */
+// Oculta el mensaje de "no hay mensajes"
 function hideEmptyState() {
-    // TODO: Implementar función para ocultar el estado vacío
-    // Pista: Agrega la clase 'hidden' al elemento emptyState
+    emptyState.classList.add('hidden');
 }
 
-/**
- * Muestra el estado vacío (mensaje cuando no hay mensajes)
- */
+// Muestra el mensaje de "no hay mensajes"
 function showEmptyState() {
-    // TODO: Implementar función para mostrar el estado vacío
-    // Pista: Remueve la clase 'hidden' del elemento emptyState
+    emptyState.classList.remove('hidden');
 }
-
 
 // ============================================
 // 3. CREACIÓN DE ELEMENTOS
